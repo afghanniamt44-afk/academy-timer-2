@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0d1d2c">
+    <meta
+      name="description"
+      content="Projector-ready inter-school speech competition timer with a laptop operator console."
+    >
+    <title>Speech Competition Timer | QRS&amp;C</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="style.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <script defer src="script.js"></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="branding">
+        <div class="logo-frame">
+          <img
+            class="school-logo"
+            src="./logo.png"
+            alt="Quetta Residential School & College logo"
+            width="832"
+            height="640"
+            fetchpriority="high"
+          >
+        </div>
+        <h1>Quetta Residential School &amp; College</h1>
+        <p>Inter-School Speech Competition</p>
+        <blockquote class="quote">“Your voice has the power to inspire, influence, and create change.”</blockquote>
+      </header>
+
+      <div class="workspace">
+        <section class="projector-panel" aria-label="Projector timer display">
+          <div class="projector-topline">
+            <span class="live-indicator" aria-hidden="true"></span>
+            <span>Speech timer</span>
+            <span class="projector-divider" aria-hidden="true">/</span>
+            <span id="projector-state">Ready</span>
+          </div>
+
+          <div class="timer-content">
+            <div class="speaker-banner" id="speaker-banner" role="status" aria-live="polite" hidden>
+              <span class="banner-message" id="banner-message"></span>
+            </div>
+            <p class="timer-label">Maximum speech time</p>
+            <p class="timer-display" id="timer" role="timer" aria-live="off" aria-atomic="true">02:54</p>
+            <p class="timer-caption" id="timer-caption">Ready when you are</p>
+            <div class="timer-progress" aria-hidden="true">
+              <span class="timer-progress-fill" id="timer-progress-fill"></span>
+            </div>
+          </div>
+
+          <div class="projector-footer">
+            <span>Quetta Residential School &amp; College</span>
+            <span>Speak with confidence</span>
+          </div>
+          <div class="burst-overlay" id="burst-overlay" aria-hidden="true"></div>
+        </section>
+
+        <aside class="operator-panel" aria-labelledby="operator-title">
+          <div class="panel-heading">
+            <div>
+              <p class="panel-kicker">Control room</p>
+              <h2 id="operator-title">Operator console</h2>
+            </div>
+            <span class="operator-badge">LIVE</span>
+          </div>
+
+          <section class="control-section" aria-labelledby="controls-title">
+            <h3 class="section-title" id="controls-title">Timer controls</h3>
+            <div class="button-row">
+              <button class="control-button start-button" id="start-button" type="button">
+                <span aria-hidden="true">▶</span> <span id="start-label">Start</span>
+              </button>
+              <button class="control-button pause-button" id="pause-button" type="button" disabled>
+                <span class="pause-symbol" aria-hidden="true"><i></i><i></i></span> Pause
+              </button>
+              <button class="control-button reset-button" id="reset-button" type="button">
+                <span class="reset-symbol" aria-hidden="true">↻</span> Reset
+              </button>
+            </div>
+            <button class="projector-button" id="projector-button" type="button" aria-pressed="false">
+              <span class="projector-button-icon" aria-hidden="true">⛶</span>
+              <span id="projector-button-label">Enter projector mode</span>
+            </button>
+          </section>
+
+          <section class="control-section duration-section" aria-labelledby="duration-title">
+            <h3 class="section-title" id="duration-title">Custom speech time</h3>
+            <form class="duration-form" id="duration-form">
+              <label class="time-field">
+                <span>Minutes</span>
+                <input id="duration-minutes" name="minutes" type="number" inputmode="numeric" min="0" max="99" value="2" aria-label="Duration minutes">
+              </label>
+              <span class="duration-colon" aria-hidden="true">:</span>
+              <label class="time-field">
+                <span>Seconds</span>
+                <input id="duration-seconds" name="seconds" type="number" inputmode="numeric" min="0" max="59" value="54" aria-label="Duration seconds">
+              </label>
+              <button class="apply-button" type="submit">Apply</button>
+            </form>
+            <p class="field-error" id="duration-error" role="alert" hidden></p>
+          </section>
+
+          <details class="settings-section" id="settings">
+            <summary>Settings &amp; notes</summary>
+            <div class="settings-content">
+              <section class="settings-group" aria-labelledby="sound-title">
+                <label class="section-title" id="sound-title" for="sound-select">Button sound</label>
+                <select class="select-control" id="sound-select">
+                  <option value="techno">Techno beep</option>
+                  <option value="arcade">Gaming jingle</option>
+                  <option value="cinematic">Cinematic bass</option>
+                  <option value="bell">Synth bell</option>
+                  <option value="digital">Digital chime</option>
+                  <option value="classic">Classic alert</option>
+                </select>
+                <p class="field-hint">Choose a sound for Start and Pause.</p>
+              </section>
+
+              <section class="settings-group" aria-labelledby="intro-title">
+              <div class="section-heading-row">
+                <h3 class="section-title" id="intro-title">Student name announcement</h3>
+                <label class="toggle" for="intro-toggle">
+                  <input id="intro-toggle" type="checkbox" aria-describedby="intro-hint">
+                  <span class="toggle-track" aria-hidden="true"></span>
+                  <span class="visually-hidden">Enable student intro mode</span>
+                </label>
+              </div>
+              <label class="visually-hidden" for="student-name">Next student's name</label>
+              <input
+                class="text-control"
+                id="student-name"
+                type="text"
+                maxlength="80"
+                autocomplete="off"
+                placeholder="Enter the next speaker's name"
+                disabled
+              >
+              <p class="field-hint" id="intro-hint">When enabled, the name is announced before the timer starts.</p>
+
+              <label class="section-title notes-label" for="competition-notes">Competition notes</label>
+              <textarea
+                class="text-control notes-control"
+                id="competition-notes"
+                placeholder="Speaker order, instructions, or judging notes..."
+                rows="4"
+              ></textarea>
+              </section>
+            </div>
+          </details>
+
+          <p class="operator-status" id="operator-status" role="status" aria-live="polite">Timer ready.</p>
+        </aside>
+      </div>
+    </main>
+  </body>
+</html>

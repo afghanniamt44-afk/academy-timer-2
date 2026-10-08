@@ -1,0 +1,1095 @@
+:root {
+  color-scheme: light;
+  font-family: "DM Sans", sans-serif;
+  color: #172f69;
+  background: #eef0f4;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  --navy: #1b306c;
+  --navy-dark: #142656;
+  --emerald: #187b50;
+  --line: #e9ebef;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  display: grid;
+  min-width: 320px;
+  min-height: 100vh;
+  min-height: 100svh;
+  margin: 0;
+  padding: 12px;
+  place-items: center;
+  background: #eef0f4;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.app-shell {
+  width: min(100%, 560px);
+  padding: 58px clamp(30px, 8vw, 78px) 34px;
+  overflow: hidden;
+  border: 1px solid rgba(20, 43, 69, 0.035);
+  border-radius: 38px;
+  background: #fff;
+  box-shadow: 0 12px 45px rgba(27, 39, 59, 0.055);
+}
+
+.branding {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.logo-frame {
+  position: relative;
+  display: grid;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto 25px;
+  place-items: center;
+  color: var(--navy);
+}
+
+.school-logo {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: min(100%, 270px);
+  max-height: 205px;
+  object-fit: contain;
+}
+
+.branding h1 {
+  max-width: 570px;
+  margin: 0;
+  color: var(--navy);
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(24px, 5.5vw, 44px);
+  font-weight: 800;
+  letter-spacing: 0.015em;
+  line-height: 1.18;
+  text-transform: uppercase;
+}
+
+.branding > p {
+  max-width: 530px;
+  margin: 22px 0 0;
+  color: var(--emerald);
+  font-size: clamp(19px, 4vw, 31px);
+  font-weight: 800;
+  letter-spacing: 0.035em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.quote {
+  max-width: 530px;
+  margin: 46px auto 0;
+  color: #555;
+  font-size: clamp(17px, 3.6vw, 25px);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.55;
+  text-align: center;
+}
+
+.workspace {
+  display: flex;
+  flex-direction: column;
+}
+
+.projector-panel {
+  position: relative;
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  align-items: center;
+  overflow: visible;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--navy);
+  text-align: center;
+}
+
+.projector-topline,
+.projector-footer {
+  display: none;
+}
+
+.timer-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  padding: 39px 0 0;
+}
+
+.timer-label {
+  margin: 0;
+  color: #5d5d5d;
+  font-size: clamp(18px, 3.4vw, 27px);
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.timer-display {
+  margin: 18px 0 0;
+  color: var(--navy);
+  font-family: "Manrope", "DM Sans", sans-serif;
+  font-size: clamp(104px, 23vw, 166px);
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  letter-spacing: -0.07em;
+  line-height: 1.08;
+}
+
+.timer-caption {
+  min-height: 24px;
+  margin: 8px 0 0;
+  color: #777;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+}
+
+.timer-progress {
+  width: 0;
+  height: 0;
+  margin: 0;
+}
+
+.timer-progress-fill {
+  display: none;
+}
+
+.speaker-banner {
+  display: flex;
+  width: min(100%, 470px);
+  flex-direction: column;
+  gap: 4px;
+  margin: 0 auto 24px;
+  padding: 14px 18px;
+  border: 1px solid #d4ebe1;
+  border-radius: 14px;
+  background: #f0f8f4;
+  animation: banner-enter 350ms ease-out both;
+}
+
+.banner-message {
+  color: var(--navy);
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(18px, 4vw, 25px);
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.burst-overlay {
+  position: absolute;
+  z-index: 1;
+  inset: 5% 0 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.burst-overlay::before,
+.burst-overlay::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 34px;
+  height: 34px;
+  border: 2px solid rgba(27, 48, 108, 0.35);
+  border-radius: 50%;
+  content: "";
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.2);
+}
+
+.burst-overlay.is-active::before {
+  animation: start-burst 850ms ease-out both;
+}
+
+.burst-overlay.is-active::after {
+  animation: start-burst 850ms 120ms ease-out both;
+}
+
+.projector-panel.is-warning .timer-display {
+  color: #c16c18;
+}
+
+.projector-panel.is-finished .timer-display {
+  color: #b94138;
+}
+
+.operator-panel {
+  width: 100%;
+}
+
+.panel-heading {
+  display: none;
+}
+
+.control-section {
+  margin-top: 34px;
+}
+
+.duration-section {
+  width: min(100%, 390px);
+  margin: 18px auto 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.section-title {
+  display: block;
+  margin: 0 0 10px;
+  color: #364656;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.button-row {
+  display: grid;
+  width: min(100%, 270px);
+  gap: 15px;
+  margin: 0 auto;
+}
+
+.control-button {
+  display: flex;
+  width: 100%;
+  min-height: 76px;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 19px;
+  color: #fff;
+  cursor: pointer;
+  font-size: clamp(17px, 4vw, 23px);
+  font-weight: 800;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+  transition:
+    transform 140ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease,
+    opacity 180ms ease;
+}
+
+.control-button:not(:disabled):hover,
+.apply-button:hover,
+.projector-button:hover {
+  transform: translateY(-2px);
+}
+
+.control-button:not(:disabled):active,
+.apply-button:active,
+.projector-button:active {
+  transform: translateY(0);
+}
+
+.control-button:focus-visible,
+.apply-button:focus-visible,
+.projector-button:focus-visible,
+.select-control:focus-visible,
+.text-control:focus-visible,
+.time-field input:focus-visible,
+.toggle input:focus-visible + .toggle-track,
+.settings-section summary:focus-visible {
+  outline: 3px solid rgba(19, 134, 106, 0.45);
+  outline-offset: 3px;
+}
+
+.control-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.46;
+}
+
+.start-button,
+.pause-button {
+  background: var(--navy);
+  box-shadow: 0 5px 12px rgba(20, 43, 69, 0.12);
+}
+
+.start-button:not(:disabled):hover,
+.pause-button:not(:disabled):hover {
+  background: var(--navy-dark);
+  box-shadow: 0 8px 18px rgba(20, 43, 69, 0.18);
+}
+
+.reset-button {
+  background: #555;
+  box-shadow: 0 5px 12px rgba(32, 38, 43, 0.1);
+}
+
+.reset-button:not(:disabled):hover {
+  background: #444;
+}
+
+.pause-symbol {
+  display: inline-flex;
+  width: 25px;
+  height: 25px;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  border-radius: 4px;
+  background: #f28a20;
+  box-shadow: 0 0 9px rgba(242, 138, 32, 0.28);
+}
+
+.pause-symbol i {
+  width: 3px;
+  height: 11px;
+  border-radius: 1px;
+  background: #fff;
+}
+
+.reset-symbol {
+  font-size: 25px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.projector-button {
+  display: flex;
+  width: min(100%, 270px);
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 14px auto 0;
+  border: 1px solid #e4eaed;
+  border-radius: 11px;
+  background: #f8fafb;
+  color: #4e5e6d;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 700;
+  transition: transform 130ms ease, background-color 160ms ease;
+}
+
+.duration-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 9px;
+}
+
+.time-field {
+  display: grid;
+  gap: 5px;
+  color: #8a949d;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.time-field input,
+.select-control,
+.text-control {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #e4e9ec;
+  border-radius: 9px;
+  background: #fbfcfc;
+  color: #25384b;
+  font-size: 12px;
+}
+
+.time-field input {
+  height: 39px;
+  padding: 0 10px;
+  font-size: 15px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.duration-colon {
+  padding-bottom: 10px;
+  color: #a8b0b6;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.apply-button {
+  min-height: 39px;
+  padding: 0 15px;
+  border: 0;
+  border-radius: 9px;
+  background: #e8f5ef;
+  color: #147653;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 800;
+  transition: transform 130ms ease, background-color 160ms ease;
+}
+
+.select-control {
+  height: 40px;
+  padding: 0 11px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.field-hint {
+  margin: 7px 0 0;
+  color: #929ba3;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.settings-section {
+  width: min(100%, 390px);
+  margin: 16px auto 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.settings-section summary {
+  padding: 15px 2px;
+  color: #526170;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  list-style-position: inside;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.settings-content {
+  padding: 4px 0 16px;
+}
+
+.settings-group {
+  margin-top: 19px;
+}
+
+.settings-content .section-title {
+  margin-bottom: 9px;
+}
+
+.section-heading-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.toggle {
+  position: relative;
+  display: inline-flex;
+  width: 37px;
+  height: 21px;
+  flex: 0 0 auto;
+  cursor: pointer;
+}
+
+.toggle input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.toggle-track {
+  width: 100%;
+  height: 100%;
+  border-radius: 99px;
+  background: #dce2e5;
+  transition: background-color 180ms ease;
+}
+
+.toggle-track::before {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16);
+  content: "";
+  transition: transform 180ms ease;
+}
+
+.toggle input:checked + .toggle-track {
+  background: var(--emerald);
+}
+
+.toggle input:checked + .toggle-track::before {
+  transform: translateX(16px);
+}
+
+.text-control {
+  min-height: 39px;
+  padding: 10px 11px;
+  line-height: 1.45;
+}
+
+.text-control::placeholder {
+  color: #a2abb2;
+}
+
+.text-control:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.notes-label {
+  margin-top: 16px !important;
+}
+
+.notes-control {
+  display: block;
+  min-height: 82px;
+  resize: vertical;
+}
+
+.field-error {
+  margin: 7px 0 0;
+  color: #b43e36;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.operator-status {
+  min-height: 19px;
+  margin: 13px 0 0;
+  color: #849099;
+  font-size: 11px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.projector-mode {
+  display: grid;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  min-height: 0;
+  overflow: hidden;
+  padding: 10px 18px;
+  place-items: center;
+  background: #eef0f4;
+}
+
+.projector-mode .app-shell {
+  display: flex;
+  width: min(100%, 1500px);
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 12px 42px 112px;
+  overflow: visible;
+  border-radius: 30px;
+}
+
+.projector-mode .branding {
+  flex: 0 0 auto;
+  margin-bottom: 0;
+}
+
+.projector-mode .logo-frame {
+  margin-bottom: 6px;
+}
+
+.projector-mode .school-logo {
+  max-width: 110px;
+  max-height: 76px;
+}
+
+.projector-mode .branding h1 {
+  font-size: clamp(18px, 2.5vw, 28px);
+}
+
+.projector-mode .branding > p {
+  margin-top: 4px;
+  font-size: clamp(13px, 1.5vw, 18px);
+}
+
+.projector-mode .quote,
+.projector-mode .projector-topline,
+.projector-mode .projector-footer {
+  display: none;
+}
+
+.projector-mode .operator-panel {
+  position: fixed;
+  z-index: 10;
+  right: 50%;
+  bottom: 10px;
+  display: block;
+  width: min(400px, calc(100% - 24px));
+  padding: 10px 14px;
+  border: 1px solid rgba(27, 48, 108, 0.1);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 8px 28px rgba(27, 39, 59, 0.14);
+  transform: translateX(50%);
+  backdrop-filter: blur(8px);
+}
+
+.projector-mode .operator-panel > .control-section {
+  margin: 0;
+}
+
+.projector-mode .operator-panel > .control-section > .section-title,
+.projector-mode .duration-section,
+.projector-mode .settings-section,
+.projector-mode .operator-status {
+  display: none;
+}
+
+.projector-mode .button-row {
+  width: 100%;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.projector-mode .control-button {
+  min-height: 44px;
+  gap: 6px;
+  padding: 0 6px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+.projector-mode .pause-symbol {
+  width: 18px;
+  height: 18px;
+}
+
+.projector-mode .pause-symbol i {
+  height: 8px;
+}
+
+.projector-mode .reset-symbol {
+  font-size: 19px;
+}
+
+.projector-mode .projector-button {
+  width: 100%;
+  min-height: 28px;
+  margin-top: 6px;
+  border: 0;
+  background: transparent;
+  font-size: 10px;
+}
+
+.projector-mode .workspace {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.projector-mode .projector-panel {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.projector-mode .timer-content {
+  flex: 1 1 auto;
+  justify-content: center;
+  width: 100%;
+  padding: 10px 0;
+}
+
+.projector-mode .timer-display {
+  font-size: clamp(180px, 27vw, 300px);
+}
+
+.projector-mode .timer-progress {
+  width: min(68%, 560px);
+  height: 5px;
+  margin-top: 25px;
+  background: #e6eaf0;
+}
+
+.projector-mode .timer-progress-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--emerald);
+  transform-origin: left center;
+  transition: transform 120ms linear;
+}
+
+.projector-mode .projector-panel.is-warning .timer-progress-fill {
+  background: #f1a64f;
+}
+
+.projector-mode .projector-panel.is-finished .timer-progress-fill {
+  background: #f27e70;
+}
+
+@keyframes start-burst {
+  0% {
+    opacity: 0.75;
+    transform: translate(-50%, -50%) scale(0.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(17);
+  }
+}
+
+@keyframes banner-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 520px) {
+  body {
+    padding: 4px;
+  }
+
+  .app-shell {
+    width: 100%;
+    padding: 42px 25px 27px;
+    border-radius: 30px;
+  }
+
+  .logo-frame {
+    margin-bottom: 19px;
+  }
+
+  .school-logo {
+    max-width: min(100%, 230px);
+    max-height: 175px;
+  }
+
+  .branding h1 {
+    font-size: clamp(23px, 7vw, 36px);
+  }
+
+  .branding > p {
+    margin-top: 18px;
+    font-size: clamp(18px, 5vw, 27px);
+    letter-spacing: 0.025em;
+  }
+
+  .quote {
+    margin-top: 38px;
+    font-size: clamp(16px, 4.7vw, 22px);
+  }
+
+  .timer-content {
+    padding-top: 35px;
+  }
+
+  .timer-label {
+    font-size: clamp(15px, 4vw, 21px);
+    letter-spacing: 0.12em;
+  }
+
+  .timer-display {
+    margin-top: 12px;
+    font-size: clamp(100px, 27vw, 145px);
+  }
+
+  .control-section {
+    margin-top: 28px;
+  }
+
+  .button-row {
+    width: min(100%, 270px);
+    gap: 13px;
+  }
+
+  .control-button {
+    min-height: 68px;
+    border-radius: 17px;
+  }
+
+  .projector-mode {
+    padding: 6px;
+  }
+
+  .projector-mode .app-shell {
+    padding: 10px 12px 112px;
+    border-radius: 24px;
+  }
+
+  .projector-mode .logo-frame {
+    margin-bottom: 4px;
+  }
+
+  .projector-mode .school-logo {
+    max-width: 74px;
+    max-height: 50px;
+  }
+
+  .projector-mode .branding h1 {
+    font-size: clamp(14px, 4vw, 20px);
+  }
+
+  .projector-mode .branding > p {
+    font-size: clamp(10px, 3vw, 14px);
+  }
+
+  .projector-mode .timer-content {
+    padding-top: 10px;
+  }
+
+  .projector-mode .timer-display {
+    font-size: clamp(130px, 32vw, 240px);
+  }
+
+  .projector-mode .timer-label {
+    font-size: clamp(11px, 3.2vw, 15px);
+    letter-spacing: 0.1em;
+  }
+
+  .projector-mode .timer-caption {
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 600px) and (max-height: 850px) {
+  body:not(.projector-mode) {
+    padding: 8px;
+  }
+
+  body:not(.projector-mode) .app-shell {
+    width: min(100%, 580px);
+    padding: 20px 48px 13px;
+    border-radius: 30px;
+  }
+
+  body:not(.projector-mode) .logo-frame {
+    margin-bottom: 9px;
+  }
+
+  body:not(.projector-mode) .school-logo {
+    max-width: 125px;
+    max-height: 82px;
+  }
+
+  body:not(.projector-mode) .branding h1 {
+    font-size: clamp(21px, 2.5vw, 27px);
+    line-height: 1.16;
+  }
+
+  body:not(.projector-mode) .branding > p {
+    margin-top: 8px;
+    font-size: clamp(15px, 1.8vw, 19px);
+    line-height: 1.2;
+  }
+
+  body:not(.projector-mode) .quote {
+    margin-top: 18px;
+    font-size: 15px;
+    line-height: 1.35;
+  }
+
+  body:not(.projector-mode) .timer-content {
+    padding-top: 20px;
+  }
+
+  body:not(.projector-mode) .timer-label {
+    font-size: 15px;
+    letter-spacing: 0.12em;
+  }
+
+  body:not(.projector-mode) .timer-display {
+    margin-top: 5px;
+    font-size: clamp(88px, 11vw, 118px);
+    line-height: 1;
+  }
+
+  body:not(.projector-mode) .timer-caption {
+    min-height: 19px;
+    margin-top: 4px;
+    font-size: 12px;
+  }
+
+  body:not(.projector-mode) .control-section {
+    margin-top: 16px;
+  }
+
+  body:not(.projector-mode) .button-row {
+    width: min(100%, 230px);
+    gap: 8px;
+  }
+
+  body:not(.projector-mode) .control-button {
+    min-height: 48px;
+    border-radius: 13px;
+    font-size: 14px;
+  }
+
+  body:not(.projector-mode) .pause-symbol {
+    width: 20px;
+    height: 20px;
+  }
+
+  body:not(.projector-mode) .projector-button {
+    width: min(100%, 230px);
+    min-height: 34px;
+    margin-top: 8px;
+  }
+
+  body:not(.projector-mode) .settings-section {
+    margin-top: 12px;
+  }
+
+  body:not(.projector-mode) .duration-section {
+    margin-top: 12px;
+    padding-top: 10px;
+  }
+
+  body:not(.projector-mode) .settings-section summary {
+    padding: 9px 2px;
+  }
+
+  body:not(.projector-mode) .operator-status {
+    min-height: 15px;
+    margin-top: 5px;
+    font-size: 10px;
+  }
+}
+
+@media (min-width: 521px) and (max-width: 700px) and (min-height: 900px) {
+  body:not(.projector-mode) {
+    padding: 4px;
+  }
+
+  body:not(.projector-mode) .app-shell {
+    width: 100%;
+    padding: 48px 7.5vw 28px;
+    border-radius: 34px;
+  }
+
+  body:not(.projector-mode) .logo-frame {
+    margin-bottom: 24px;
+  }
+
+  body:not(.projector-mode) .school-logo {
+    max-width: min(100%, 270px);
+    max-height: 205px;
+  }
+
+  body:not(.projector-mode) .branding h1 {
+    max-width: 100%;
+    font-size: clamp(31px, 6.4vw, 44px);
+    line-height: 1.18;
+  }
+
+  body:not(.projector-mode) .branding > p {
+    margin-top: 19px;
+    font-size: clamp(22px, 4.5vw, 31px);
+    letter-spacing: 0.025em;
+    line-height: 1.25;
+  }
+
+  body:not(.projector-mode) .quote {
+    margin-top: 42px;
+    font-size: clamp(19px, 3.7vw, 25px);
+    line-height: 1.55;
+  }
+
+  body:not(.projector-mode) .timer-content {
+    padding-top: 37px;
+  }
+
+  body:not(.projector-mode) .timer-label {
+    font-size: clamp(19px, 3.9vw, 27px);
+    letter-spacing: 0.15em;
+  }
+
+  body:not(.projector-mode) .timer-display {
+    margin-top: 15px;
+    font-size: clamp(136px, 23vw, 166px);
+    line-height: 1.08;
+  }
+
+  body:not(.projector-mode) .timer-caption {
+    min-height: 24px;
+    margin-top: 8px;
+    font-size: 15px;
+  }
+
+  body:not(.projector-mode) .control-section {
+    margin-top: 32px;
+  }
+
+  body:not(.projector-mode) .button-row {
+    width: min(100%, 270px);
+    gap: 14px;
+  }
+
+  body:not(.projector-mode) .control-button {
+    min-height: 76px;
+    border-radius: 18px;
+    font-size: clamp(18px, 3.5vw, 23px);
+  }
+
+  body:not(.projector-mode) .projector-button {
+    width: min(100%, 270px);
+    min-height: 42px;
+    margin-top: 12px;
+  }
+
+  body:not(.projector-mode) .settings-section {
+    margin-top: 22px;
+  }
+
+  body:not(.projector-mode) .settings-section summary {
+    padding: 13px 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
